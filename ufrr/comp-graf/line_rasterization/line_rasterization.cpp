@@ -35,7 +35,11 @@ void lr::LineRasterization::analytical(int x1, int y1, int x2, int y2, arr::Arra
     return;
 }
 
-void lr::LineRasterization::dda(int x1, int y1, int x2, int y2, int** array, int rows, int cols){
+void lr::LineRasterization::dda(int x1, int y1, int x2, int y2, arr::Array frame_buffer){
+    int** array = frame_buffer.data;
+    int rows = frame_buffer.rows;
+    int cols = frame_buffer.cols;
+
     int d_x, d_y;
     d_x = x2 - x1;
     d_y = y2 - y1;
@@ -65,7 +69,10 @@ void lr::LineRasterization::dda(int x1, int y1, int x2, int y2, int** array, int
     }
 }
 
-void lr::LineRasterization::bresenham(int x1, int y1, int x2, int y2, int** array, int rows, int cols) {
+void lr::LineRasterization::bresenham(int x1, int y1, int x2, int y2, arr::Array frame_buffer) {
+    int** array = frame_buffer.data;
+    int rows = frame_buffer.rows;
+    int cols = frame_buffer.cols;
 
     if (x2 < x1){
         swap(&x1, &x2);
