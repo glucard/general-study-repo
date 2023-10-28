@@ -3,6 +3,18 @@
 
 #define PI 3.14159265358979323846
 
+void cr::CircumferenceRasterization::simmetric_dot(int** array, int x_center, int y_center, int x_k, int y_k, int value){
+    array[y_center + (int)y_k][x_center + (int)x_k] = value;
+    array[y_center + (int)y_k][x_center - (int)x_k] = value;
+    array[y_center - (int)y_k][x_center + (int)x_k] = value;
+    array[y_center - (int)y_k][x_center - (int)x_k] = value;
+    
+    array[x_center + (int)x_k][y_center + (int)y_k] = value;
+    array[x_center + (int)x_k][y_center - (int)y_k] = value;
+    array[x_center - (int)x_k][y_center + (int)y_k] = value;
+    array[x_center - (int)x_k][y_center - (int)y_k] = value;
+}
+
 void cr::CircumferenceRasterization::parametric_equation(int x_c, int y_c, int radius, arr::Array frame_buffer) {
     int rows, cols;
     rows = frame_buffer.rows;
@@ -55,17 +67,39 @@ void cr::CircumferenceRasterization::simmetric_incremental(int x_center, int y_c
         x_k = (int)roundf(vector_x);
         y_k = (int)roundf(vector_y);
 
-        array[y_center + (int)y_k][x_center + (int)x_k] = value;
-        array[y_center + (int)y_k][x_center - (int)x_k] = value;
-        array[y_center - (int)y_k][x_center + (int)x_k] = value;
-        array[y_center - (int)y_k][x_center - (int)x_k] = value;
-        
-        array[x_center + (int)x_k][y_center + (int)y_k] = value;
-        array[x_center + (int)x_k][y_center - (int)y_k] = value;
-        array[x_center - (int)x_k][y_center + (int)y_k] = value;
-        array[x_center - (int)x_k][y_center - (int)y_k] = value;
+        this->simmetric_dot(array, x_center, y_center, x_k, y_k);
 
         vector_x = vector_x * cos_teta - vector_y * sin_teta;
         vector_y = vector_y * cos_teta + vector_x * sin_teta;
     }
+}
+
+void cr::CircumferenceRasterization::bresenham(int x_center, int y_center, int radius, arr::Array frame_buffer, int value) {
+    int rows, cols;
+    rows = frame_buffer.rows;
+    cols = frame_buffer.cols;
+    int** array = frame_buffer.data;
+
+    int x, y;
+
+    x = 0;
+    y = radius;
+
+    float p = 5.f / 4.f - radius;
+
+    while (x != y) {
+        simmetric_dot(array, x_center, y_center, x, y);
+
+        if (p >= 0) {
+            y = y - 1;
+            p = p + 2*(x - y) + 5;
+            x = x + 1;
+            continue;
+        }
+
+        // não altera y;
+        p = p + 2*x +3;
+        x = x + 1;
+    }
+    simmetric_dot(array, x_center, y_center, x, y);
 }

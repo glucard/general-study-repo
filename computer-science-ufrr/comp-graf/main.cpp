@@ -20,7 +20,7 @@ int main(int, char**){
 
     // line_rasterization.bresenham(3, 1, 8, 5, frame_buffer);
     line_rasterization.analytical(10,10,10,10, frame_buffer);
-    circumference_rasterization.simmetric_incremental(10, 10, 7, frame_buffer);
+    circumference_rasterization.bresenham(10, 10, 7, frame_buffer);
 
     frame_buffer.print_array();
 
