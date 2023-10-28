@@ -59,6 +59,7 @@ void cr::CircumferenceRasterization::simmetric_incremental(int x_center, int y_c
     vector_y = radius * sinf(teta_radians);
 
     int x, y, x_k, y_k;
+    // int_limit = (360 / 8) * (45 / teta)
 
     for (int t = 2; t <= 45; t++) {
         x = x_center + (int)vector_x;
