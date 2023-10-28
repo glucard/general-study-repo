@@ -9,6 +9,7 @@ namespace cr {
         private:
         public:
             void parametric_equation(int x, int y, int radius, arr::Array frame_buffer);
+            void simmetric_incremental(int x, int y, int radius, arr::Array frame_buffer, int value=1, int teta=1);
     };
 }
 

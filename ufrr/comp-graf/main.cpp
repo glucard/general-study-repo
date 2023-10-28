@@ -13,14 +13,14 @@
 #define Y2 4
 
 int main(int, char**){
-    arr::Array frame_buffer(15, 15);
+    arr::Array frame_buffer(21, 21);
 
     lr::LineRasterization line_rasterization;
     cr::CircumferenceRasterization circumference_rasterization;
 
     // line_rasterization.bresenham(3, 1, 8, 5, frame_buffer);
-    line_rasterization.analytical(7,7,7,7, frame_buffer);
-    circumference_rasterization.parametric_equation(7, 7, 7, frame_buffer);
+    line_rasterization.analytical(10,10,10,10, frame_buffer);
+    circumference_rasterization.simmetric_incremental(10, 10, 7, frame_buffer);
 
     frame_buffer.print_array();
 
