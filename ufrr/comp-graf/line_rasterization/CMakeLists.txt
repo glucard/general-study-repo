@@ -1,3 +1,0 @@
-add_library(line_rasterization line_rasterization.cpp)
-
-target_include_directories(line_rasterization PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

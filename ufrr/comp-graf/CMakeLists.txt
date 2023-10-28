@@ -5,15 +5,13 @@ include(CTest)
 enable_testing()
 
 add_subdirectory(array)
-add_subdirectory(circumference_rasterization)
-add_subdirectory(line_rasterization)
+add_subdirectory(rasterization)
 
 add_executable(trab_2 main.cpp)
 
-target_link_libraries( trab_2
-                            array
-                            circumference_rasterization
-                            line_rasterization
+target_link_libraries(trab_2
+                        array
+                        rasterization
 )
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})

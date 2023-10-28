@@ -1,3 +1,0 @@
-add_library(circumference_rasterization circumference_rasterization.cpp)
-
-target_include_directories(circumference_rasterization PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
