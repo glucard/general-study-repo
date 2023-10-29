@@ -1,5 +1,8 @@
+#ifndef LINE_RASTERIZATION_HPP
+#define LINE_RASTERIZATION_HPP
+
 #include <iostream>
-#include "../array/array.hpp"
+#include "array.hpp"
 
 namespace lr{
     class LineRasterization {
@@ -10,3 +13,5 @@ namespace lr{
             void bresenham(int x1, int y1, int x2, int y2, arr::Array frame_buffer);
     };
 }
+
+#endif // LINE_RASTERIZATION_HPP

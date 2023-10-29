@@ -1,8 +1,8 @@
-#ifndef CIRCUMFERENCE_RASTERIZATION_H_GUARD
-#define CIRCUMFERENCE_RASTERIZATION_H_GUARD
+#ifndef CIRCUMFERENCE_RASTERIZATION_H
+#define CIRCUMFERENCE_RASTERIZATION_H
 
 #include <iostream>
-#include "../array/array.hpp"
+#include "array.hpp"
 
 namespace cr {
     class CircumferenceRasterization {

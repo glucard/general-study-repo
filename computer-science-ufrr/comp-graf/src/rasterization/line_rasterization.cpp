@@ -1,6 +1,4 @@
-#include "line_rasterization.h"
-
-using namespace std;
+#include "line_rasterization.hpp"
 
 void swap(int* a, int* b){
     int t = *a;
@@ -15,7 +13,7 @@ void lr::LineRasterization::analytical(int x1, int y1, int x2, int y2, arr::Arra
 
     if (x1 == x2){
         if (y2 < y1) 
-            swap(y1, y2);
+            swap(&y1, &y2);
 
         for(int i = y1; i <= y2; i++)
             array[i][x1] = 1;

@@ -1,3 +1,5 @@
-add_library(rasterization line_rasterization.cpp circumference_rasterization.cpp)
+add_library(rasterization line_rasterization.cpp circumference_rasterization.cpp line_rasterization.hpp circumference_rasterization.hpp)
 
-target_include_directories(rasterization PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(rasterization PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+
+target_link_libraries(rasterization array)

@@ -1,5 +1,5 @@
-#ifndef ARRAY_H_GUARD
-#define ARRAY_H_GUARD
+#ifndef ARRAY_H
+#define ARRAY_H
 
 #include <iostream>
 
