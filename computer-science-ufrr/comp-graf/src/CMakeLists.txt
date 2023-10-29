@@ -1,6 +1,7 @@
 
 add_subdirectory(array)
 add_subdirectory(rasterization)
+add_subdirectory(fill)
 
 add_executable(trab_2 main.cpp)
 
@@ -25,6 +26,7 @@ target_link_libraries(trab_2
     PUBLIC
         array
         rasterization
+        fill
     PRIVATE
         sfml-audio
         sfml-graphics
