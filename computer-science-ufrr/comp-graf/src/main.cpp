@@ -1,7 +1,6 @@
 #include <iostream>
 #include "array/array.hpp"
-#include "rasterization/line_rasterization.hpp"
-#include "rasterization/circumference_rasterization.hpp"
+#include "rasterization/rasterization.hpp"
 
 #define ARRAY_ROWS 5
 #define ARRAY_COLS 10
@@ -15,8 +14,8 @@
 int main(int, char**){
     arr::Array frame_buffer(21, 21);
 
-    lr::LineRasterization line_rasterization;
-    cr::CircumferenceRasterization circumference_rasterization;
+    rtz::Line line_rasterization;
+    rtz::Circumference circumference_rasterization;
 
     // line_rasterization.bresenham(3, 1, 8, 5, frame_buffer);
     line_rasterization.analytical(10,10,10,10, frame_buffer);

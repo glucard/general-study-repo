@@ -1,11 +1,22 @@
-#ifndef CIRCUMFERENCE_RASTERIZATION_H
-#define CIRCUMFERENCE_RASTERIZATION_H
+#ifndef RASTERIZATION_HPP
+#define RASTERIZATION_HPP
 
 #include <iostream>
 #include "array.hpp"
+#include <math.h>
 
-namespace cr {
-    class CircumferenceRasterization {
+#define PI 3.14159265358979323846
+
+namespace rtz{
+    class Line{
+        private:
+        public:
+            void analytical(int x1, int y1, int x2, int y2, arr::Array frame_buffer);
+            void dda(int x1, int y1, int x2, int y2, arr::Array frame_buffer);
+            void bresenham(int x1, int y1, int x2, int y2, arr::Array frame_buffer);
+    };
+    
+    class Circumference {
         private:
             void simmetric_dot(int** array, int x_center, int y_center, int x_k, int y_k, int value=1);
         public:
@@ -15,4 +26,4 @@ namespace cr {
     };
 }
 
-#endif
+#endif // RASTERIZATION_HPP
