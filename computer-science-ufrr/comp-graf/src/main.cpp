@@ -1,6 +1,7 @@
 #include <iostream>
 #include "array/array.hpp"
-#include "rasterization/rasterization.hpp"
+#include "rasterization/LineRasterization.hpp"
+#include "rasterization/CircumferenceRasterization.hpp"
 #include "fill/fill.hpp"
 
 #define ARRAY_ROWS 5
