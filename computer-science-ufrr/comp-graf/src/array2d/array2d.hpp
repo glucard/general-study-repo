@@ -4,9 +4,9 @@
 #include <iostream>
 
 namespace arr {
-    class Array {
+    class Array2d {
         public:
-            Array(int rows, int cols, int initial_value=0);
+            Array2d(int rows, int cols, int initial_value=0);
             int** data;
             int rows;
             int cols;

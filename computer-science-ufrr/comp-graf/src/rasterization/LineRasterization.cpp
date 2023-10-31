@@ -6,7 +6,7 @@ void swap(int* a, int* b){
     *b = t;
 }
 
-void rtz::Line::analytical(int x1, int y1, int x2, int y2, arr::Array frame_buffer){
+void rtz::Line::analytical(int x1, int y1, int x2, int y2, arr::Array2d frame_buffer){
     int** array = frame_buffer.data;
     int rows = frame_buffer.rows;
     int cols = frame_buffer.cols;
@@ -33,7 +33,7 @@ void rtz::Line::analytical(int x1, int y1, int x2, int y2, arr::Array frame_buff
     return;
 }
 
-void rtz::Line::dda(int x1, int y1, int x2, int y2, arr::Array frame_buffer){
+void rtz::Line::dda(int x1, int y1, int x2, int y2, arr::Array2d frame_buffer){
     int** array = frame_buffer.data;
     int rows = frame_buffer.rows;
     int cols = frame_buffer.cols;
@@ -67,7 +67,7 @@ void rtz::Line::dda(int x1, int y1, int x2, int y2, arr::Array frame_buffer){
     }
 }
 
-void rtz::Line::bresenham(int x1, int y1, int x2, int y2, arr::Array frame_buffer) {
+void rtz::Line::bresenham(int x1, int y1, int x2, int y2, arr::Array2d frame_buffer) {
     int** array = frame_buffer.data;
     int rows = frame_buffer.rows;
     int cols = frame_buffer.cols;

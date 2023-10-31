@@ -1,7 +1,8 @@
 
-add_subdirectory(array)
+add_subdirectory(array2d)
 add_subdirectory(rasterization)
 add_subdirectory(fill)
+add_subdirectory(polygon)
 
 add_executable(trab_2 main.cpp)
 
@@ -24,9 +25,10 @@ target_compile_options(trab_2 PRIVATE -Wall)
 
 target_link_libraries(trab_2
     PUBLIC
-        array
+        array2d
         rasterization
         fill
+        polygon
     PRIVATE
         sfml-audio
         sfml-graphics
