@@ -4,6 +4,8 @@
 - Computer graphics techniques: rasterization and fill;
 - Using SFML with cmake;
 
+## todo:
+- auto add sfml .dll files when build;
 
 ## Project Tree
 

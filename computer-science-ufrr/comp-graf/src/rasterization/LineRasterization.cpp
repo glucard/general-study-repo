@@ -71,60 +71,43 @@ void rtz::Line::bresenham(int x1, int y1, int x2, int y2, arr::Array2d frame_buf
     int** array = frame_buffer.data;
     int rows = frame_buffer.rows;
     int cols = frame_buffer.cols;
-
     if (x2 < x1){
         swap(&x1, &x2);
         swap(&y1, &y2);
     }
-
     bool y1_bigger = false;
-
     if (y2 < y1) {
         y1 = -y1;
         y2 = -y2;
         y1_bigger = true;
     }
-
     int d_x, d_y, y, x;
-
     d_x = x2 - x1;
     d_y = y2 - y1;
     y = y1;
     x = x1;
-
-
     if (d_y > d_x) {
         int p = 2 * d_x - d_y;
-        
         for (y = y1; y <= y2; y++) {
-            
             y1_bigger ? array[-y][x] = 1 : array[y][x] = 1;
-
             if (p >= 0) {
                 x += 1;
                 p = p + 2 * (d_x - d_y);
                 continue;
             }
-
             p = p + 2 * d_x;
 
         }
         return;
     }
-
     int p = 2 * d_y - d_x;
-    
     for (int x = x1; x <= x2; x++) {
-        
         y1_bigger ? array[-y][x] = 1 : array[y][x] = 1;
-
         if (p >= 0) {
             y += 1;
             p = p + 2 * (d_y - d_x);
             continue;
         }
-
         p = p + 2 * d_y;
-
     }
 }

@@ -12,11 +12,21 @@ arr::Array2d::Array2d(int cols, int rows, int initial_value){
     this->reset_array();
 }
 
-void arr::Array2d::print_array(){
+void arr::Array2d::print_array(bool reverse){
 
     // print array inverted (to looks more like a cartesian map)
     int i, j;
-    for (i = this->rows - 1; i >= 0; i--){
+
+    if (reverse){
+        for (i = this->rows - 1; i >= 0; i--){
+            for (j = 0; j < this->cols; j++)
+                std::cout << this->data[i][j] << " ";
+            std::cout << std::endl;
+        }
+        return;
+    }
+    
+    for (i = 0; i < this->rows; i++){
         for (j = 0; j < this->cols; j++)
             std::cout << this->data[i][j] << " ";
         std::cout << std::endl;

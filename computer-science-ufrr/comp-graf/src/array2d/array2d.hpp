@@ -10,7 +10,7 @@ namespace arr {
             int** data;
             int rows;
             int cols;
-            void print_array();
+            void print_array(bool reverse=true);
             void reset_array(int value=0);
             void del_array();
     };
