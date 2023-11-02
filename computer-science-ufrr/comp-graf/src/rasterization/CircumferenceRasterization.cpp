@@ -6,10 +6,10 @@ void rtz::Circumference::simmetric_dot(int** array, int x_center, int y_center, 
     array[y_center - (int)y_k][x_center + (int)x_k] = value;
     array[y_center - (int)y_k][x_center - (int)x_k] = value;
     
-    array[x_center + (int)x_k][y_center + (int)y_k] = value;
-    array[x_center + (int)x_k][y_center - (int)y_k] = value;
-    array[x_center - (int)x_k][y_center + (int)y_k] = value;
-    array[x_center - (int)x_k][y_center - (int)y_k] = value;
+    array[y_center + (int)x_k][x_center + (int)y_k] = value;
+    array[y_center + (int)x_k][x_center - (int)y_k] = value;
+    array[y_center - (int)x_k][x_center + (int)y_k] = value;
+    array[y_center - (int)x_k][x_center - (int)y_k] = value;
 }
 
 void rtz::Circumference::parametric_equation(int x_c, int y_c, int radius, arr::Array2d frame_buffer) {
@@ -72,8 +72,7 @@ void rtz::Circumference::simmetric_incremental(int x_center,int y_center, int ra
     }
 }
 
-void rtz::Circumference::bresenham(int x_center, int y_center,
- int radius, arr::Array2d frame_buffer, int value) {
+void rtz::Circumference::bresenham(int x_center, int y_center, int radius, arr::Array2d frame_buffer, int value) {
     int rows, cols;
     rows = frame_buffer.rows;
     cols = frame_buffer.cols;
@@ -84,9 +83,9 @@ void rtz::Circumference::bresenham(int x_center, int y_center,
     x = 0;
     y = radius;
 
-    int p = 1 - radius;
+    int p = 5.f/ 4.f - radius;
 
-    while (x != y) {
+    while (x <= y) {
         simmetric_dot(array, x_center, y_center, x, y);
 
         if (p >= 0) {
