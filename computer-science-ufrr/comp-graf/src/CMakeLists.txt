@@ -2,7 +2,7 @@
 add_subdirectory(array2d)
 add_subdirectory(rasterization)
 add_subdirectory(fill)
-add_subdirectory(Polygon)
+add_subdirectory(geometric)
 add_subdirectory(BezierCurve)
 
 add_executable(trab_2 main.cpp)
@@ -14,6 +14,6 @@ target_link_libraries(trab_2
         array2d
         rasterization
         fill
-        Polygon
+        geometric
         BezierCurve
 )

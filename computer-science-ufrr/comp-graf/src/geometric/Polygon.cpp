@@ -11,9 +11,7 @@ rtz::Polygon::Polygon(int _color){
 }
 
 void rtz::Polygon::add_vertice(int x, int y){
-    Point p;
-    p.x = x;
-    p.y = y;
+    rtz::Point p(x, y);
     this->vertices.push_back(p);
     /* 
     if (x < this->min.x)

@@ -2,14 +2,15 @@
 #define BEZIER_CURVE_HPP
 
 #include <iostream>
+#include <vector>
+
 #include "array2d.hpp"
-#include "Polygon.hpp"
 
 namespace bzc
 {
     class BezierCurve {
     private:
-
+        // std::vector<Point>
     public:
         void parametric();
     };

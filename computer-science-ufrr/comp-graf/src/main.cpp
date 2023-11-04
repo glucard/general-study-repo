@@ -4,7 +4,7 @@
 #include "rasterization/LineRasterization.hpp"
 #include "rasterization/CircumferenceRasterization.hpp"
 #include "fill/fill.hpp"
-#include "polygon/polygon.hpp"
+#include "geometric/Polygon.hpp"
 
 #define LINE_COLS 30
 #define LINE_ROWS 30
@@ -150,20 +150,20 @@ int main(int, char**){
         case 1:
             int x1, y1, x2, y2;
             std::cout << "x1 y1: ";
-            scanf("%d%d", &x1, &y1);
+            scanf_s("%d%d", &x1, &y1);
             std::cout << "x2 y2: ";
-            scanf("%d%d", &x2, &y2);
+            scanf_s("%d%d", &x2, &y2);
             line_rasterization_demo(x1, y1, x2, y2);
             break;
         case 2:
 
             int x_c, y_c, radius;
             std::cout << "x_center: ";
-            scanf("%d", &x_c);
+            scanf_s("%d", &x_c);
             std::cout << "y_center: ";
-            scanf("%d", &y_c);
+            scanf_s("%d", &y_c);
             std::cout << "radius: ";
-            scanf("%d", &radius);
+            scanf_s("%d", &radius);
             circumference_rasterization_demo(x_c, y_c, radius);
             break;
         case 3:
@@ -172,7 +172,7 @@ int main(int, char**){
                 std::cout << "-1 -1 to stop, must have at least 3 vertices" << std::endl;
                 while(true){
                     std::cout << "add a vertice (x y): ";
-                    scanf("%d%d", &x, &y);
+                    scanf_s("%d%d", &x, &y);
                     if (x < 0 || y < 0){
                         break;
                     }
@@ -191,7 +191,7 @@ int main(int, char**){
                 case 1:
                     std::cout << "select seed location " << std::endl;
                     std::cout << "x y: " << std::endl;
-                    scanf("%d%d", &x, &y);
+                    scanf_s("%d%d", &x, &y);
                     fill.flood_fill(x, y, frame_buffer, 1);
                     frame_buffer.print_array();
                     break;
