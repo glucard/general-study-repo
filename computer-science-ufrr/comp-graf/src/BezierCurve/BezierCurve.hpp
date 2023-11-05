@@ -5,14 +5,16 @@
 #include <vector>
 
 #include "array2d.hpp"
+#include "Point.hpp"
 
 namespace bzc
 {
     class BezierCurve {
     private:
-        // std::vector<Point>
+        std::vector<rtz::Point> points;
     public:
-        void parametric();
+        void add_point(int x, int y);
+        void parametric(int max_steps, arr::Array2d frame_buffer);
     };
 } 
 

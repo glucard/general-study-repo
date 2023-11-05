@@ -5,6 +5,7 @@
 #include "rasterization/CircumferenceRasterization.hpp"
 #include "fill/fill.hpp"
 #include "geometric/Polygon.hpp"
+#include "BezierCurve/BezierCurve.hpp"
 
 #define LINE_COLS 30
 #define LINE_ROWS 30
@@ -126,15 +127,19 @@ void fill_demo(){
 
 
 int main(int, char**){
-    
 
-    // line_rasterization_demo();
-    // circumference_rasterization_demo();
-    // fill_demo();
-
-
-    int x, y;
     arr::Array2d frame_buffer(30, 30);
+    bzc::BezierCurve bezier_curve;
+    bezier_curve.add_point(0, 0);
+    bezier_curve.add_point(20, 0);
+    bezier_curve.add_point(20, 5);
+    bezier_curve.add_point(2, 5);
+    bezier_curve.add_point(2, 29);
+    bezier_curve.add_point(30, 10);
+    bezier_curve.parametric(100, frame_buffer);
+    frame_buffer.print_array();
+
+    /* int x, y;
     rtz::Polygon polygon(1);
     rtz::Fill fill;
 
@@ -205,7 +210,7 @@ int main(int, char**){
             break;
         default:
             std::cout << "command not found." << std::endl;
-    }
+    } */
     /* 
     sf::RenderWindow window(sf::VideoMode(WINDOW_X, WINDOW_Y), "comp-graf");
 
