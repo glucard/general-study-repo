@@ -9,12 +9,12 @@ interface IMSGDataTypes {
     time: String;
 }
 
-export default function ChatPage({userName} : any) {
+export default function ChatPage({userName, connection} : any) {
 
     const [currentMessage, setCurrentMessage] = useState("")
     const [chatMessages, setChatMessages] = useState<IMSGDataTypes[]>([])
-    
-    const { connection } = useConnection();
+    const [users, setUsers] = useState<any[]>([])
+    const [lastTyping, setLastTyping] = useState<any>({})
 
     const handleSend = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -25,25 +25,59 @@ export default function ChatPage({userName} : any) {
                 time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes()
             };
 
+            setChatMessages((msgs) => [...msgs, newMsg]); // add before send
             connection.emit("send_message", newMsg);
             setCurrentMessage("");
         }
     }
 
     useEffect(() => {
+
+    }, [])
+
+    useEffect(() => {
         if(connection) {
             connection.on("receive_message", (msg:IMSGDataTypes) => {
                 setChatMessages((msgs) => [...msgs, msg]);
             })
+            connection.on("update_users_client", (public_users:any) => {
+                var new_users:any = []
+                for (const id in public_users) {
+                    new_users.push({
+                        id: id,
+                        name: public_users[id]['name']
+                    })
+                }
+                console.log("users: ",new_users," end");
+                setUsers(new_users);
+            })
+            connection.on("is_typing", (id:string) => {
+                setLastTyping((e:any)=>{
+                    e[id] = Date.now();
+                    return e;
+                })
+            })
         }
     }, [connection]);
+    console.log(lastTyping)
     return (
         <div className="flex">
             <div className="flex flex-col w-96 h-screen bg-green-300 p-3 gap-6 border-green-600">
                 <div className="flex flex-col">
                     <span>online users</span>
-                    <span>...</span>
-                    <span>{userName}</span>
+                    {
+                        users.map((u, key) => (
+                            <div key={key}>
+                                {u.name}{
+                                    (!lastTyping) ? "" : (
+                                        (!(u.id in lastTyping)) ? "" : (
+                                            ((Date.now() - lastTyping[u.id]) < 1000) ? "is typing" : ""
+                                        )
+                                    )
+                                }
+                            </div>
+                        ))
+                    }
                 </div>
             </div>
 
@@ -66,7 +100,11 @@ export default function ChatPage({userName} : any) {
                     }
                 </div>
                 <form onSubmit={handleSend} className="flex gap-2 w-full justify-center">
-                    <input type="text" className='rounded px-2 py-3 text-gray-700 border border-gray-400 w-2/3' placeholder="enter message" value={currentMessage} onChange={(e)=>setCurrentMessage(e.target.value)}/>
+                    <input type="text" className='rounded px-2 py-3 text-gray-700 border border-gray-400 w-2/3' placeholder="enter message" value={currentMessage}
+                        onChange={(e)=>{
+                            connection.emit("is_typing", connection.id);
+                            setCurrentMessage(e.target.value);
+                        }}/>
                     <button type="submit"
                         className='inline-flex items-center justify-content  px-4 py-2 text-base font-medium leading-6 text-white
                         whitespace-no-wrap bg-blue-600 border border-blue-700 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none

@@ -2,12 +2,12 @@
 
 import ChatPage from "@/components/chat/ChatPage";
 import { useConnection } from "@/context/connect";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const [showSpinner, setShowSpinner] = useState(false)
   const [showChat, setShowChat] = useState(false)
-  const [userName, setUserName] = useState("")
+  const [userName, setUserName] = useState("") 
 
   const { connection } = useConnection();
 
@@ -50,7 +50,7 @@ export default function Home() {
         </div>
       </div>
       <div className="w-full" style={{display: showChat ? "" : "none"}}>
-        <ChatPage userName={userName}/>
+        <ChatPage userName={userName} connection={connection}/>
       </div>
     </main>
   )
