@@ -30,13 +30,13 @@ io.on("connection", async(socket)=>{
         
         public_users[socket.id] = {
             name: userName,
-            is_typing: false,
         };
         
         msg = {
             user: "",
             msg: `${userName} has connected.`,
-            time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes()
+            time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes(),
+            to: "everyone"
         }
         //console.log(msg)
         io.emit("receive_message", msg)
@@ -54,6 +54,13 @@ io.on("connection", async(socket)=>{
         // io.emit("receive_message", msg);
     })
     
+    socket.on("send_private_message", ( msg, receiver_id ) => {
+        receiver_id = msg.to;
+        console.log(msg, receiver_id)
+        if (users[receiver_id])
+            users[receiver_id].socket.emit("receive_message", msg);
+    })
+
     socket.on("update_users", (n)=>{
         console.log("updating")
         io.emit("update_users_client", public_users);
