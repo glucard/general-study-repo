@@ -4,7 +4,6 @@ import math
 
 # ^y = A_phi . ^x
 
-
 X_coordinates = []
 
 for x_1 in range(20):
@@ -12,9 +11,6 @@ for x_1 in range(20):
         X_coordinates.append([x_1-10, x_2-10])
 
 X_coordinates = np.array(X_coordinates).T
-
-
-
 
 A_1 = np.array([
     [math.cos(math.pi/4), -math.sin(math.pi/4)],
@@ -45,7 +41,6 @@ axis[3].scatter(Y_3[0], Y_3[1], s=s)
 for ax in axis:
     ax.set_xticks([])
     ax.set_yticks([])
-
 
 plt.setp(axis, xlim=[-20, 20], ylim=[-20, 20])
 plt.autoscale(False)
