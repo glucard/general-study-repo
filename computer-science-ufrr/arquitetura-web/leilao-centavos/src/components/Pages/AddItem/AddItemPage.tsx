@@ -1,9 +1,11 @@
+import { useConnection } from "@/context/connect";
 import { useDataContext } from "@/context/data_context";
 import { useState } from "react"
 
 export default () => {
 
     const { setCurrentPage, user } = useDataContext();
+    const { connection } = useConnection();
 
     const [description, setDescription] = useState('');
     const [name, setName] = useState('');
@@ -33,6 +35,7 @@ export default () => {
                 console.log(res)
                 const res_json = await res.json();
                 console.log(res_json);
+                connection.emit("new_item");
                 alert("Cadastrado com sucesso")
                 setCurrentPage('home')
             } catch (error) {

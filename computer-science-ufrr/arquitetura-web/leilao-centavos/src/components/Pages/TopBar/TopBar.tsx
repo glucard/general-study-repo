@@ -25,14 +25,21 @@ export default () => {
             </div>
         )
         setUserSection(user_section);
+        
+        const body = user;
+        fetch(`/api/user/edit_bids`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(body),
+        });
     },[user])
 
 
     
     return (
         <div className="flex flex-col bg-white text-black">
-            <div className="flex flex-row justify-between p-5">
-                <a>Leilao Centavos</a>
+            <div className="flex flex-row justify-between p-5 items-center">
+                <img src="./logo-leilao-legal.png" className="h-20" alt="leilao legal" />
 
                 {
                     userSection
@@ -40,10 +47,10 @@ export default () => {
             </div>
             <div className="flex flex-row gap-20 p-5 justify-center bg-purple-200">
                 <button onClick={() => setCurrentPage('home')}>Home</button>
-                <a>Leiloes Arrematados</a>
+                <button onClick={() => setCurrentPage('sold_to')}>Leiloes Arrematados</button>
                 <a>Perguntas frequentes</a>
                 <a>Depoimentos</a>
-                <a>Comprar Lances</a>
+                <button onClick={() => user ? setCurrentPage('buy_bid') : setCurrentPage('login')}>Comprar Lances</button>
             </div>
         </div>
     )

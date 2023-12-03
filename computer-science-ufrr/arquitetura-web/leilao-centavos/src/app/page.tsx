@@ -1,9 +1,11 @@
 "use client"
 import AddItemPage from '@/components/Pages/AddItem/AddItemPage'
+import BuyBidPage from '@/components/Pages/BuyBidPage/BuyBidPage'
 import HomePage from '@/components/Pages/HomePage/HomePage'
 import LoginPage from '@/components/Pages/LoginPage/LoginPage'
 import RegisterUserPage from '@/components/Pages/RegisterUserPage/RegisterUserPage'
 import TopBar from '@/components/Pages/TopBar/TopBar'
+import SoldItemsPage from '@/components/Pages/SoldItemsPage/SoldItemsPage'
 import { useDataContext } from '@/context/data_context'
 export default function Home() {
 
@@ -19,6 +21,12 @@ export default function Home() {
       break
     case 'add_item':
       show_page = <AddItemPage/>
+      break
+    case 'buy_bid':
+      show_page = <BuyBidPage/>
+      break
+    case 'sold_to':
+      show_page = <SoldItemsPage/>
       break
     case 'home':
     default:

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { Provider as DataProvider } from "@/context/data_context"
-import { Provider as ConnectionProvider } from "@/context/data_context"
+import { Provider as ConnectionProvider } from "@/context/connect"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className="bg-purple-50">
         <ConnectionProvider><DataProvider>{children}</DataProvider></ConnectionProvider>
       </body>
     </html>
