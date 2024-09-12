@@ -1,0 +1,1 @@
+{"lr": 0.12671842626447147, "momentum": 0.8391275005602986, "classifier_dropout": 0.43681224461276724, "weight_decay": 0.0006628964786275194, "clip_value": 3, "lr_scheduler_gamma": 0.9830063405554846, "image_net": "IMAGENET1K_V2", "nesterov": true, "transfer_model": "mobiletenet_v3_large"}
