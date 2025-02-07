@@ -1,4 +1,4 @@
-#include "polygon.hpp"
+#include "Polygon.hpp"
 
 rtz::Polygon::Polygon(int _color){
     this->color = _color;

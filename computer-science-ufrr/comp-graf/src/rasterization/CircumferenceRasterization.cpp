@@ -55,7 +55,7 @@ void rtz::Circumference::simmetric_incremental(int x_center,int y_center, int ra
     vector_x = radius * cosf(teta_radians);
     vector_y = radius * sinf(teta_radians);
 
-    int x, y, x_k, y_k;
+    int x, y, x_k, y_k, temp_x;
     // int_limit = (360 / 8) * (45 / teta)
 
     for (int t = 2; t <= 45; t++) {
@@ -67,8 +67,9 @@ void rtz::Circumference::simmetric_incremental(int x_center,int y_center, int ra
 
         this->simmetric_dot(array, x_center, y_center, x_k, y_k);
 
+        temp_x = vector_x
         vector_x = vector_x * cos_teta - vector_y * sin_teta;
-        vector_y = vector_y * cos_teta + vector_x * sin_teta;
+        vector_y = vector_y * cos_teta + temp_x * sin_teta;
     }
 }
 

@@ -8,7 +8,7 @@ void Fill::flood_fill_recursive(int x, int y, arr::Array2d frame_buffer, int see
     cols = frame_buffer.cols;
     array = frame_buffer.data;
 
-    if (x > cols || x < 0 || y > rows || y < 0)
+    if (x >= cols || x < 0 || y >= rows || y < 0)
         return;
 
     if (array[y][x] == seed_color) {
@@ -28,7 +28,7 @@ void Fill::flood_fill(int x, int y, arr::Array2d frame_buffer, int new_color){
     cols = frame_buffer.cols;
     array = frame_buffer.data;
     
-    if (x > cols || x < 0 || y > rows || y < 0) {
+    if (x >= cols || x < 0 || y >= rows || y < 0) {
         throw std::invalid_argument("Flood_fill coordinates out of bound.");
         return;
     }

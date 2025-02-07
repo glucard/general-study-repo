@@ -129,17 +129,17 @@ void fill_demo(){
 int main(int, char**){
 
     arr::Array2d frame_buffer(30, 30);
-    bzc::BezierCurve bezier_curve;
-    bezier_curve.add_point(0, 0);
-    bezier_curve.add_point(20, 0);
-    bezier_curve.add_point(20, 5);
-    bezier_curve.add_point(2, 5);
-    bezier_curve.add_point(2, 29);
-    bezier_curve.add_point(30, 10);
-    bezier_curve.parametric(100, frame_buffer);
-    frame_buffer.print_array();
+    // bzc::BezierCurve bezier_curve;
+    // bezier_curve.add_point(0, 0);
+    // bezier_curve.add_point(20, 0);
+    // bezier_curve.add_point(20, 5);
+    // bezier_curve.add_point(2, 5);
+    // bezier_curve.add_point(2, 29);
+    // bezier_curve.add_point(30, 10);
+    // bezier_curve.parametric(100, frame_buffer);
+    // frame_buffer.print_array();
 
-    /* int x, y;
+    int x, y;
     rtz::Polygon polygon(1);
     rtz::Fill fill;
 
@@ -155,20 +155,20 @@ int main(int, char**){
         case 1:
             int x1, y1, x2, y2;
             std::cout << "x1 y1: ";
-            scanf_s("%d%d", &x1, &y1);
+            scanf("%d%d", &x1, &y1);
             std::cout << "x2 y2: ";
-            scanf_s("%d%d", &x2, &y2);
+            scanf("%d%d", &x2, &y2);
             line_rasterization_demo(x1, y1, x2, y2);
             break;
         case 2:
 
             int x_c, y_c, radius;
             std::cout << "x_center: ";
-            scanf_s("%d", &x_c);
+            scanf("%d", &x_c);
             std::cout << "y_center: ";
-            scanf_s("%d", &y_c);
+            scanf("%d", &y_c);
             std::cout << "radius: ";
-            scanf_s("%d", &radius);
+            scanf("%d", &radius);
             circumference_rasterization_demo(x_c, y_c, radius);
             break;
         case 3:
@@ -177,7 +177,7 @@ int main(int, char**){
                 std::cout << "-1 -1 to stop, must have at least 3 vertices" << std::endl;
                 while(true){
                     std::cout << "add a vertice (x y): ";
-                    scanf_s("%d%d", &x, &y);
+                    scanf("%d%d", &x, &y);
                     if (x < 0 || y < 0){
                         break;
                     }
@@ -196,7 +196,7 @@ int main(int, char**){
                 case 1:
                     std::cout << "select seed location " << std::endl;
                     std::cout << "x y: " << std::endl;
-                    scanf_s("%d%d", &x, &y);
+                    scanf("%d%d", &x, &y);
                     fill.flood_fill(x, y, frame_buffer, 1);
                     frame_buffer.print_array();
                     break;
@@ -210,7 +210,7 @@ int main(int, char**){
             break;
         default:
             std::cout << "command not found." << std::endl;
-    } */
+    }
     /* 
     sf::RenderWindow window(sf::VideoMode(WINDOW_X, WINDOW_Y), "comp-graf");
 
