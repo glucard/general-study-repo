@@ -14,8 +14,8 @@
 #define LINE_X2 4
 #define LINE_Y2 9
 
-#define CIRCUMFERENCE_COLS 30
-#define CIRCUMFERENCE_ROWS 30
+#define CIRCUMFERENCE_COLS 100
+#define CIRCUMFERENCE_ROWS 100
 #define CIRCUMFERENCE_X 7
 #define CIRCUMFERENCE_Y 7
 #define CIRCUMFERENCE_RADIUS 7
@@ -37,7 +37,7 @@ void line_rasterization_demo(int x1, int y1, int x2, int y2){
     frame_buffer.reset_array();
     std::cout <<  "---------------------------------" << std::endl;
     
-    line_rasterization.dda(x1, y1, x2, y2, frame_buffer);
+    line_rasterization.dda(x1, y1, x2, y2, frame_buffer, '@');
     std::cout <<  "DDA" << std::endl;
     frame_buffer.print_array();
     frame_buffer.reset_array();
@@ -107,7 +107,7 @@ void fill_demo(){
     polygon.raster(frame_buffer);
     frame_buffer.print_array(false);
 
-    fill.flood_fill(25, 25, frame_buffer, 1);
+    fill.flood_fill(25, 10, frame_buffer, 1);
     std::cout <<  "FLOOD FILL" << std::endl;
     frame_buffer.print_array(false);
     frame_buffer.reset_array();
@@ -125,6 +125,65 @@ void fill_demo(){
     frame_buffer.del_array();
 }
 
+void raster_fill_and_print(
+        rtz::Polygon polygon,
+        arr::Array2d frame_buffer,
+        rtz::Fill fill,
+        int fill_x,
+        int fill_y
+    ){
+    polygon.raster(frame_buffer);
+    frame_buffer.print_array(false);
+
+    fill.flood_fill(fill_x, fill_y, frame_buffer, 'P');
+    std::cout <<  "FLOOD FILL" << std::endl;
+    frame_buffer.print_array(false);
+    frame_buffer.reset_array();
+    std::cout <<  "---------------------------------" << std::endl;
+
+    polygon.raster(frame_buffer);
+    fill.geometric(0,0, 49, 24, frame_buffer, '+', 'P');
+    std::cout <<  "GEOMETRIC FILL" << std::endl;
+    frame_buffer.print_array(false);
+    frame_buffer.reset_array();
+    std::cout <<  "---------------------------------" << std::endl;
+}
+
+
+void trabalho_preenchimentos(){
+
+    std::cout <<  "TRABALHO DE PREENCHIMENTOS" << std::endl;
+    std::cout <<  "---------------------------------" << std::endl;
+
+    arr::Array2d frame_buffer(50, 25);
+
+    rtz::Fill fill;
+    rtz::Polygon polygon('+');
+
+    polygon.add_vertice(5,7);
+    polygon.add_vertice(20,1);
+    polygon.add_vertice(45,15);
+    polygon.add_vertice(43,20);
+    polygon.add_vertice(10,24);
+    polygon.add_vertice(18,16);
+
+    raster_fill_and_print(polygon, frame_buffer, fill, 20, 10);
+
+    polygon.reset();
+    polygon.add_vertice(2, 8);
+    polygon.add_vertice(25, 1);
+    polygon.add_vertice(47, 5);
+    polygon.add_vertice(49, 15);
+    polygon.add_vertice(23, 19);
+    polygon.add_vertice(20, 9);
+    polygon.add_vertice(28, 7);
+    polygon.add_vertice(28, 12);
+    polygon.add_vertice(5, 14);
+    
+    raster_fill_and_print(polygon, frame_buffer, fill, 20, 8);
+    
+    frame_buffer.del_array();
+}
 
 int main(int, char**){
 
@@ -207,6 +266,9 @@ int main(int, char**){
                 default:
                     std::cout << "command not found." << std::endl;
             }
+            break;
+        case 4:
+            trabalho_preenchimentos();
             break;
         default:
             std::cout << "command not found." << std::endl;

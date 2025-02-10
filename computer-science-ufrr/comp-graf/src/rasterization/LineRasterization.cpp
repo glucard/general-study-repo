@@ -6,8 +6,8 @@ void swap(int* a, int* b){
     *b = t;
 }
 
-void rtz::Line::analytical(int x1, int y1, int x2, int y2, arr::Array2d frame_buffer){
-    int** array = frame_buffer.data;
+void rtz::Line::analytical(int x1, int y1, int x2, int y2, arr::Array2d frame_buffer, char value){
+    char** array = frame_buffer.data;
     int rows = frame_buffer.rows;
     int cols = frame_buffer.cols;
 
@@ -16,7 +16,7 @@ void rtz::Line::analytical(int x1, int y1, int x2, int y2, arr::Array2d frame_bu
             swap(&y1, &y2);
 
         for(int i = y1; i <= y2; i++)
-            array[i][x1] = 1;
+            array[i][x1] = value;
         return;
     }
     // find line equation
@@ -27,14 +27,14 @@ void rtz::Line::analytical(int x1, int y1, int x2, int y2, arr::Array2d frame_bu
     int y;
     for(int x = x1; x <= x2; x++){
         y = (int) (x * m + b);
-        array[y][x] = 1;
+        array[y][x] = value;
         // cout << "(" << x << ", " << y << ") ";
     }
     return;
 }
 
-void rtz::Line::dda(int x1, int y1, int x2, int y2, arr::Array2d frame_buffer){
-    int** array = frame_buffer.data;
+void rtz::Line::dda(int x1, int y1, int x2, int y2, arr::Array2d frame_buffer, char value){
+    char** array = frame_buffer.data;
     int rows = frame_buffer.rows;
     int cols = frame_buffer.cols;
 
@@ -51,7 +51,8 @@ void rtz::Line::dda(int x1, int y1, int x2, int y2, arr::Array2d frame_buffer){
         y = (float)y1;
 
         for(int x = x1; x <= x2; x++){
-            array[(int)y][x] = 1;
+            printf("aqui1");
+            array[(int)y][x] = value;
             y += increment;
         }
 
@@ -62,13 +63,14 @@ void rtz::Line::dda(int x1, int y1, int x2, int y2, arr::Array2d frame_buffer){
     float x = (float) x1;
 
     for(int y = y1; y <= y2; y++){
-        array[y][(int)x] = 1;
+        printf("aqui12");
+        array[y][(int)x] = value;
         x += increment;
     }
 }
 
-void rtz::Line::bresenham(int x1, int y1, int x2, int y2, arr::Array2d frame_buffer) {
-    int** array = frame_buffer.data;
+void rtz::Line::bresenham(int x1, int y1, int x2, int y2, arr::Array2d frame_buffer, char value) {
+    char** array = frame_buffer.data;
     int rows = frame_buffer.rows;
     int cols = frame_buffer.cols;
     if (x2 < x1){
@@ -89,7 +91,7 @@ void rtz::Line::bresenham(int x1, int y1, int x2, int y2, arr::Array2d frame_buf
     if (d_y > d_x) {
         int p = 2 * d_x - d_y;
         for (y = y1; y <= y2; y++) {
-            y1_bigger ? array[-y][x] = 1 : array[y][x] = 1;
+            y1_bigger ? array[-y][x] = value : array[y][x] = value;
             if (p >= 0) {
                 x += 1;
                 p = p + 2 * (d_x - d_y);
@@ -102,7 +104,7 @@ void rtz::Line::bresenham(int x1, int y1, int x2, int y2, arr::Array2d frame_buf
     }
     int p = 2 * d_y - d_x;
     for (int x = x1; x <= x2; x++) {
-        y1_bigger ? array[-y][x] = 1 : array[y][x] = 1;
+        y1_bigger ? array[-y][x] = value : array[y][x] = value;
         if (p >= 0) {
             y += 1;
             p = p + 2 * (d_y - d_x);

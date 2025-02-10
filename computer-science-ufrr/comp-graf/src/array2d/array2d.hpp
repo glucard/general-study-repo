@@ -6,12 +6,12 @@
 namespace arr {
     class Array2d {
         public:
-            Array2d(int rows, int cols, int initial_value=0);
-            int** data;
+            Array2d(int rows, int cols, char initial_value=' ');
+            char** data;
             int rows;
             int cols;
             void print_array(bool reverse=true);
-            void reset_array(int value=0);
+            void reset_array(char value=' ');
             void del_array();
     };
 }

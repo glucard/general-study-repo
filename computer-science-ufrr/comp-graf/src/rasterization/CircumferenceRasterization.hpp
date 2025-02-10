@@ -10,11 +10,11 @@
 namespace rtz {
     class Circumference {
         private:
-            void simmetric_dot(int** array, int x_center, int y_center, int x_k, int y_k, int value=1);
+            void simmetric_dot(char** array, int x_center, int y_center, int x_k, int y_k, char value='@');
         public:
-            void parametric_equation(int x, int y, int radius, arr::Array2d frame_buffer);
-            void simmetric_incremental(int x, int y, int radius, arr::Array2d frame_buffer, int value=1, int teta=1);
-            void bresenham(int x, int y, int radius, arr::Array2d frame_buffer, int value=1);
+            void parametric_equation(int x, int y, int radius, arr::Array2d frame_buffer, char value='@');
+            void simmetric_incremental(int x, int y, int radius, arr::Array2d frame_buffer, char value='@', int teta=1);
+            void bresenham(int x, int y, int radius, arr::Array2d frame_buffer, char value='@');
     };
 }
 

@@ -1,6 +1,6 @@
 #include "CircumferenceRasterization.hpp"
 
-void rtz::Circumference::simmetric_dot(int** array, int x_center, int y_center, int x_k, int y_k, int value){
+void rtz::Circumference::simmetric_dot(char** array, int x_center, int y_center, int x_k, int y_k, char value){
     array[y_center + (int)y_k][x_center + (int)x_k] = value;
     array[y_center + (int)y_k][x_center - (int)x_k] = value;
     array[y_center - (int)y_k][x_center + (int)x_k] = value;
@@ -12,7 +12,7 @@ void rtz::Circumference::simmetric_dot(int** array, int x_center, int y_center, 
     array[y_center - (int)x_k][x_center - (int)y_k] = value;
 }
 
-void rtz::Circumference::parametric_equation(int x_c, int y_c, int radius, arr::Array2d frame_buffer) {
+void rtz::Circumference::parametric_equation(int x_c, int y_c, int radius, arr::Array2d frame_buffer, char value) {
     int rows, cols;
     rows = frame_buffer.rows;
     cols = frame_buffer.cols;
@@ -30,64 +30,48 @@ void rtz::Circumference::parametric_equation(int x_c, int y_c, int radius, arr::
         t_radians = (float) t * pi_180;
         x = x_c + radius * cosf(t_radians);
         y = y_c + radius * sinf(t_radians);
-        frame_buffer.data[(int)round(y)][(int)round(x)] = 1;
+        frame_buffer.data[(int)round(y)][(int)round(x)] = value;
     }
 }
 
-void rtz::Circumference::simmetric_incremental(int x_center,int y_center, int radius, arr::Array2d frame_buffer, int value, int teta){
+void rtz::Circumference::simmetric_incremental(int x_center,int y_center, int radius, arr::Array2d frame_buffer, char value, int teta){
     int rows, cols;
     rows = frame_buffer.rows;
     cols = frame_buffer.cols;
 
-    int** array = frame_buffer.data;
+    char** array = frame_buffer.data;
 
-    float pi_180 = (float) PI / 180.f;
-
-    float teta_radians, cos_teta, sin_teta;
-    
-    teta_radians = teta * pi_180;
-    cos_teta = cosf(teta_radians);
-    sin_teta = sinf(teta_radians);
-
-
-    float vector_x, vector_y;
-
-    vector_x = radius * cosf(teta_radians);
-    vector_y = radius * sinf(teta_radians);
-
-    int x, y, x_k, y_k, temp_x;
-    // int_limit = (360 / 8) * (45 / teta)
-
-    for (int t = 2; t <= 45; t++) {
-        x = x_center + (int)vector_x;
-        y = y_center + (int)vector_y;
-
-        x_k = (int)roundf(vector_x);
-        y_k = (int)roundf(vector_y);
-
-        this->simmetric_dot(array, x_center, y_center, x_k, y_k);
-
-        temp_x = vector_x;
-        vector_x = vector_x * cos_teta - vector_y * sin_teta;
-        vector_y = vector_y * cos_teta + temp_x * sin_teta;
+    float x = (float)radius;
+    float y = 0;
+    float teta0 = 1.f / radius;
+    std::cout << teta0;
+    float C = cosf(teta0);
+    float S = sinf(teta0);
+    int x_temp;
+    while (y <= x) {
+        simmetric_dot(array, x_center, y_center, (int)x, (int)y);
+        x_temp = x;
+        x = x * C - y * S;
+        y = y * C + x_temp * S;
     }
+    // simmetric_dot(array, x_center, y_center, x, y);
 }
 
-void rtz::Circumference::bresenham(int x_center, int y_center, int radius, arr::Array2d frame_buffer, int value) {
+void rtz::Circumference::bresenham(int x_center, int y_center, int radius, arr::Array2d frame_buffer, char value) {
     int rows, cols;
     rows = frame_buffer.rows;
     cols = frame_buffer.cols;
-    int** array = frame_buffer.data;
+    char** array = frame_buffer.data;
 
     int x, y;
 
     x = 0;
     y = radius;
 
-    int p = 5.f/ 4.f - radius;
+    int p = 1 - radius;
 
     while (x <= y) {
-        simmetric_dot(array, x_center, y_center, x, y);
+        simmetric_dot(array, x_center, y_center, x, y, value=value);
 
         if (p >= 0) {
             y = y - 1;
@@ -100,5 +84,5 @@ void rtz::Circumference::bresenham(int x_center, int y_center, int radius, arr::
         p = p + 2*x +3;
         x = x + 1;
     }
-    simmetric_dot(array, x_center, y_center, x, y);
+    simmetric_dot(array, x_center, y_center, x, y, value=value);
 }

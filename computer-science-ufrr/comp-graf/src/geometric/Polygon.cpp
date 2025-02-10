@@ -49,22 +49,17 @@ void rtz::Polygon::raster(arr::Array2d frame_buffer) {
         y1 = previous->y;
         x2 = i_point->x;
         y2 = i_point->y;
-        lr.bresenham(x1, y1, x2, y2, frame_buffer);
+        lr.bresenham(x1, y1, x2, y2, frame_buffer, this->color);
         
         previous = i_point;
     }
     x1 = begin->x;
     y1 = begin->y;
-    lr.bresenham(x1, y1, x2, y2, frame_buffer);  
+    lr.bresenham(x1, y1, x2, y2, frame_buffer, this->color);  
     
 }
-/* 
-void rtz::Polygon::fill(int color){
-    int rows, cols;
-    rows = this->max.x - this->min.x + 2;
-    cols = this->max.y - this->min.y + 2;
-    arr::Array2d map(rows, cols);
 
-    this->raster(map);
-} 
-*/
+void rtz::Polygon::reset(){
+    int rows, cols;
+    this->vertices.clear();
+}

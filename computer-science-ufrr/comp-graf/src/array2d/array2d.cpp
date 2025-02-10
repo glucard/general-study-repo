@@ -1,15 +1,15 @@
 #include "array2d.hpp"
 
-arr::Array2d::Array2d(int cols, int rows, int initial_value){
+arr::Array2d::Array2d(int cols, int rows, char initial_value){
     this->rows = rows;
     this->cols = cols;
     
-    this->data = new int*[this->rows];
+    this->data = new char*[this->rows];
 
     for (int i = 0; i < this->rows; i++)
-        this->data[i] = new int[this->cols];
+        this->data[i] = new char[this->cols];
 
-    this->reset_array();
+    this->reset_array(initial_value);
 }
 
 void arr::Array2d::print_array(bool reverse){
@@ -33,9 +33,9 @@ void arr::Array2d::print_array(bool reverse){
     }
 }
 
-void arr::Array2d::reset_array(int value){
+void arr::Array2d::reset_array(char value){
     for (int i = 0; i < this->rows; i++)
-        for (int j = 0; j < this->cols; j++) this->data[i][j] = 0;
+        for (int j = 0; j < this->cols; j++) this->data[i][j] = value;
 }
 
 void arr::Array2d::del_array(){

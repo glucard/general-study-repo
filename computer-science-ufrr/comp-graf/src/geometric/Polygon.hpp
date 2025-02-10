@@ -13,11 +13,12 @@ namespace rtz {
         private:
         public:
             std::vector<Point> vertices;
-            int color;
+            char color;
 
             Polygon(int _color);
             void add_vertice(int x, int y);
             void raster(arr::Array2d frame_buffer);
+            void reset();
 
             /* 
             Point min;
