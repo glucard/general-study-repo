@@ -44,3 +44,19 @@ void arr::Array2d::del_array(){
     }
     delete this->data;
 }
+
+// Display the array using OpenCV
+void arr::Array2d::display_with_cv() {
+    // Convert char** to cv::Mat
+    cv::Mat img(rows, cols, CV_8U);
+
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            img.at<uchar>(i, j) = (data[i][j] == ' ') ? 0 : 255;  // Map empty space to black and filled space to white
+        }
+    }
+
+    // Show image
+    cv::imshow("Array2D Display", img);
+    cv::waitKey(0);  // Wait for a key press
+}

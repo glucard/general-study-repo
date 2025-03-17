@@ -1,5 +1,5 @@
-#ifndef BEZIER_CURVE_HPP
-#define BEZIER_CURVE_HPP
+#ifndef __CURVE_HPP__
+#define __CURVE_HPP__
 
 #include <iostream>
 #include <vector>
@@ -16,6 +16,7 @@ namespace bzc
     public:
         void add_point(int x, int y);
         void parametric(int max_steps, arr::Array2d frame_buffer);
+        void de_casteljau(int max_steps, arr::Array2d frame_buffer);
     };
 } 
 

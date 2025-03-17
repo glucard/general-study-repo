@@ -2,6 +2,7 @@
 #define ARRAY_H
 
 #include <iostream>
+#include <opencv2/opencv.hpp>
 
 namespace arr {
     class Array2d {
@@ -13,6 +14,7 @@ namespace arr {
             void print_array(bool reverse=true);
             void reset_array(char value=' ');
             void del_array();
+            void display_with_cv();
     };
 }
 

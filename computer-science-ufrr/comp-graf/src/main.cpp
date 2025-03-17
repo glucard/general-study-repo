@@ -5,7 +5,8 @@
 #include "rasterization/CircumferenceRasterization.hpp"
 #include "fill/fill.hpp"
 #include "geometric/Polygon.hpp"
-#include "BezierCurve/BezierCurve.hpp"
+#include "curve/BelzierCurve.hpp"
+#include <opencv2/opencv.hpp>
 
 #define LINE_COLS 30
 #define LINE_ROWS 30
@@ -14,8 +15,8 @@
 #define LINE_X2 4
 #define LINE_Y2 9
 
-#define CIRCUMFERENCE_COLS 100
-#define CIRCUMFERENCE_ROWS 100
+#define CIRCUMFERENCE_COLS 800
+#define CIRCUMFERENCE_ROWS 600
 #define CIRCUMFERENCE_X 7
 #define CIRCUMFERENCE_Y 7
 #define CIRCUMFERENCE_RADIUS 7
@@ -63,19 +64,19 @@ void circumference_rasterization_demo(int x_c, int y_c, int radius){
 
     circumference_rasterization.parametric_equation(x_c, y_c, radius, frame_buffer);
     std::cout <<  "Parametric" << std::endl;
-    frame_buffer.print_array();
+    frame_buffer.display_with_cv();
     frame_buffer.reset_array();
     std::cout <<  "---------------------------------" << std::endl;
 
     circumference_rasterization.simmetric_incremental(x_c, y_c, radius, frame_buffer);
     std::cout <<  "Simmetric incremental" << std::endl;
-    frame_buffer.print_array();
+    frame_buffer.display_with_cv();
     frame_buffer.reset_array();
     std::cout <<  "---------------------------------" << std::endl;
 
     circumference_rasterization.bresenham(x_c, y_c, radius, frame_buffer);
     std::cout <<  "Bresenham" << std::endl;
-    frame_buffer.print_array();
+    frame_buffer.display_with_cv();
     frame_buffer.reset_array();
     std::cout <<  "---------------------------------" << std::endl;
     
@@ -185,6 +186,26 @@ void trabalho_preenchimentos(){
     frame_buffer.del_array();
 }
 
+void trabalho_curvas() {
+
+    std::cout <<  "TRABALHO DE CURVAS" << std::endl;
+    std::cout <<  "---------------------------------" << std::endl;
+
+    arr::Array2d frame_buffer(100, 100);
+
+    bzc::BezierCurve curve;
+    curve.add_point(5,5);
+    curve.add_point(94,5);
+    curve.add_point(94,94);
+    curve.add_point(49,49);
+
+    curve.de_casteljau(1000, frame_buffer);
+
+    frame_buffer.display_with_cv();
+
+    return;
+}
+
 int main(int, char**){
 
     arr::Array2d frame_buffer(30, 30);
@@ -207,6 +228,8 @@ int main(int, char**){
     std::cout << "1 - line rasterization:" << std::endl;
     std::cout << "2 - circumference rasterization" << std::endl;
     std::cout << "3 - fill" << std::endl;
+    std::cout << "4 - trabalho preenchimentos" << std::endl;
+    std::cout << "5 - trabalho curvas";
     std::cin >> n;
 
 
@@ -261,7 +284,7 @@ int main(int, char**){
                     break;
                 case 2:
                     fill.geometric(0, 0, 29, 29, frame_buffer, 1);
-                    frame_buffer.print_array();
+                    frame_buffer.display_with_cv();
                     break;
                 default:
                     std::cout << "command not found." << std::endl;
@@ -270,6 +293,8 @@ int main(int, char**){
         case 4:
             trabalho_preenchimentos();
             break;
+        case 5:
+            trabalho_curvas();
         default:
             std::cout << "command not found." << std::endl;
     }

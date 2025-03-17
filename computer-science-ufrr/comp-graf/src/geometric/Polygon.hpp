@@ -17,7 +17,7 @@ namespace rtz {
 
             Polygon(int _color);
             void add_vertice(int x, int y);
-            void raster(arr::Array2d frame_buffer);
+            void raster(arr::Array2d frame_buffer, bool snipe=true);
             void reset();
 
             /* 
