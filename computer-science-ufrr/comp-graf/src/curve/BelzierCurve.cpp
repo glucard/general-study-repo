@@ -60,7 +60,7 @@ void bzc::BezierCurve::parametric(int max_steps, arr::Array2d frame_buffer){
     
     float x_sum, y_sum;
     float t;
-    for(int step = 0; step < max_steps; step++) {
+    for(int step = 0; step < max_steps+1; step++) {
         t = step / (float)max_steps;
 
         x_sum = 0;

@@ -25,60 +25,82 @@ void rtz::Polygon::add_vertice(int x, int y){
     */       
 }
 
-std::vector<rtz::Point> snipe_sutherland(std::vector<rtz::Point> vertices, int x_min, int y_min, int x_max, int y_max){
-    std::vector<rtz::Point> new_verticies;
-    std::vector<std::array<int, 4>> p_codes;
+std::vector<rtz::Point> sutherland_hodgman(std::vector<rtz::Point> vertices, int x_min, int y_min, int x_max, int y_max) {
+    // Inicialmente, o polígono a ser recortado é o de entrada.
+    std::vector<rtz::Point> output = vertices;
 
-    int n_vertices = vertices.size();
+    // Função auxiliar que recorta o polígono com base em uma determinada borda.
+    // "inside" testa se um ponto está dentro da região para a borda atual.
+    // "intersect" calcula a interseção entre uma aresta do polígono e a linha de recorte.
+    auto clipEdge = [&](auto inside, auto intersect) -> void {
+        std::vector<rtz::Point> input = output;
+        output.clear();
+        if (input.empty()) return;
+        int n = input.size();
+        for (int i = 0; i < n; i++) {
+            int j = (i + 1) % n; // garante fechamento do polígono
+            rtz::Point current = input[i];
+            rtz::Point next = input[j];
 
-    // 1º Passo: associar códigos aos pontos extremos, usando a regra.
-    int i;
-    for (i=0; i<n_vertices; i++) {
-        std::array<int, 4> p_code;
-        p_code[0] = (vertices[i].x < x_min) ?  1 : 0;
-        p_code[1] = (vertices[i].x > x_max) ?  1 : 0;
-        p_code[2] = (vertices[i].y < y_min) ?  1 : 0;
-        p_code[3] = (vertices[i].y > y_max) ?  1 : 0;
-        p_codes.push_back(p_code);
-    }
-    
-    // 2º Passo: verificar se a linha é totalmente visível.
-    
-    p_codes.push_back(p_codes[0]); // completar poligno
-    int sum, inter, j;
-    for (i=0; i<n_vertices; i++) {
-        sum = 0;
-        for (j=0; j < 4; j++){
-            sum += p_codes[i][j] + p_codes[i+1][j];
-        }
-        if (sum == 0) {
-            std::cout << "Linha totalmente visível.\n";
-            new_verticies.push_back(vertices[i]);
-            new_verticies.push_back(vertices[i+1]);
-            continue;
-        } else {
-            inter = 0;
-            for (j=0; j < 4; j++){
-                inter = p_codes[i][j] + p_codes[i+1][j];
+            bool currentInside = inside(current);
+            bool nextInside = inside(next);
 
-                if (inter == 2) {
-                    std::cout << "Linha invisivel em " << j << std::endl; 
-                    continue;
-                }
-                int dy = (vertices[i + 1].y - vertices[i].y);
-                int dx = (vertices[i + 1].x - vertices[i].x);
-                float m =  dy/(float)dx;
-                
-                // ▪ Esquerda: Xmin = -1 → Y = 2/3. [ -1 - (-3/2)] + 1/6 = ½ {Ymin ≤ Y = ½ ≤ Ymax }
-                // ▪ Direita: Xmax = 1 → Y = 2/3. [1 - (-3/2)] + 1/6 = 11/6 {FORA}
-                // ▪ Top: Ymax = 1 → X = -3/2 + 3/2. [ 1 - 1/6] = -1/4 {Xmin ≤ -1/4 ≤ Xmax }
-                // ▪ Botton: Ymin = -1 → X = -3/2 + 3/2. [ 1 - 1/6] = -13/4 {FORA}
+            if (currentInside && nextInside) {
+                // Ambos os pontos estão dentro: adiciona o próximo.
+                output.push_back(next);
+            } else if (currentInside && !nextInside) {
+                // Sai da região: adiciona o ponto de interseção.
+                output.push_back(intersect(current, next));
+            } else if (!currentInside && nextInside) {
+                // Entra na região: adiciona o ponto de interseção e o próximo ponto.
+                output.push_back(intersect(current, next));
+                output.push_back(next);
             }
+            // Se ambos estiverem fora, nada é adicionado.
         }
-    }
+    };
 
+    // Recorte pela borda esquerda: x >= x_min
+    clipEdge(
+        [&](const rtz::Point &p) -> bool { return p.x >= x_min; },
+        [&](const rtz::Point &p1, const rtz::Point &p2) -> rtz::Point {
+            float t = (float)(x_min - p1.x) / (p2.x - p1.x);
+            int new_y = static_cast<int>(p1.y + t * (p2.y - p1.y));
+            return rtz::Point(x_min, new_y);
+        }
+    );
 
-    return new_verticies;
+    // Recorte pela borda direita: x <= x_max
+    clipEdge(
+        [&](const rtz::Point &p) -> bool { return p.x <= x_max; },
+        [&](const rtz::Point &p1, const rtz::Point &p2) -> rtz::Point {
+            float t = (float)(x_max - p1.x) / (p2.x - p1.x);
+            int new_y = static_cast<int>(p1.y + t * (p2.y - p1.y));
+            return rtz::Point(x_max, new_y);
+        }
+    );
+
+    // Recorte pela borda inferior: y >= y_min
+    clipEdge(
+        [&](const rtz::Point &p) -> bool { return p.y >= y_min; },
+        [&](const rtz::Point &p1, const rtz::Point &p2) -> rtz::Point {
+            float t = (float)(y_min - p1.y) / (p2.y - p1.y);
+            int new_x = static_cast<int>(p1.x + t * (p2.x - p1.x));
+            return rtz::Point(new_x, y_min);
+        }
+    );
+
+    // Recorte pela borda superior: y <= y_max
+    clipEdge(
+        [&](const rtz::Point &p) -> bool { return p.y <= y_max; },
+        [&](const rtz::Point &p1, const rtz::Point &p2) -> rtz::Point {
+            float t = (float)(y_max - p1.y) / (p2.y - p1.y);
+            int new_x = static_cast<int>(p1.x + t * (p2.x - p1.x));
+            return rtz::Point(new_x, y_max);
+        }
+    );
+
+    return output;
 }
 
 void rtz::Polygon::raster(arr::Array2d frame_buffer, bool snipe) {
@@ -88,7 +110,7 @@ void rtz::Polygon::raster(arr::Array2d frame_buffer, bool snipe) {
         return;
     }
     
-    std::vector<rtz::Point> raster_vertices = snipe ? snipe_sutherland(vertices, 0, 0, frame_buffer.cols, frame_buffer.rows) : this->vertices;
+    std::vector<rtz::Point> raster_vertices = snipe ? sutherland_hodgman(vertices, 0, 0, frame_buffer.cols-1, frame_buffer.rows-1) : this->vertices;
 
     rtz::Line lr;
     std::vector<rtz::Point>::iterator previous, i_point, begin, end;

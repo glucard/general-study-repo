@@ -203,6 +203,87 @@ void trabalho_curvas() {
 
     frame_buffer.display_with_cv();
 
+    //
+    frame_buffer.reset_array();
+    curve.parametric(1000, frame_buffer);
+
+    frame_buffer.display_with_cv();
+
+    return;
+}
+
+void trabalho_recortes() {
+
+    std::cout <<  "TRABALHO DE RECORTES" << std::endl;
+    std::cout <<  "---------------------------------" << std::endl;
+
+    arr::Array2d frame_buffer(100, 100);
+
+    // 1)
+
+    rtz::Polygon polygon('@');
+    polygon.add_vertice(10,-50);
+    polygon.add_vertice(90,-50);
+    polygon.add_vertice(90,30);
+    polygon.add_vertice(70,30);
+    polygon.add_vertice(70,-10);
+    polygon.add_vertice(30,-10);
+    polygon.add_vertice(30,30);
+    polygon.add_vertice(10,30);
+
+    polygon.raster(frame_buffer);
+    frame_buffer.display_with_cv();
+
+    
+    // 2
+    frame_buffer.reset_array();
+    polygon.reset();
+    
+    polygon.add_vertice(10,-50);
+    polygon.add_vertice(120,80);
+    polygon.add_vertice(10,80);
+
+    polygon.raster(frame_buffer);
+    frame_buffer.display_with_cv();
+    frame_buffer.reset_array();
+
+    // 3
+    frame_buffer.reset_array();
+    polygon.reset();
+    
+    polygon.add_vertice(10,80);
+    polygon.add_vertice(30,80);
+    polygon.add_vertice(30,60);
+    polygon.add_vertice(70,60);
+    polygon.add_vertice(70,80);
+    polygon.add_vertice(90,80);
+    polygon.add_vertice(90,120);
+    polygon.add_vertice(70,120);
+    polygon.add_vertice(70,140);
+    polygon.add_vertice(30,140);
+    polygon.add_vertice(30,120);
+    polygon.add_vertice(10,120);
+    
+    polygon.raster(frame_buffer);
+    frame_buffer.display_with_cv();
+    frame_buffer.reset_array();
+
+
+    // 4
+    frame_buffer.reset_array();
+    polygon.reset();
+    
+    polygon.add_vertice(-20,10);
+    polygon.add_vertice(30,-30);
+    polygon.add_vertice(80,10);
+    polygon.add_vertice(50,70);
+    polygon.add_vertice(0,70); 
+    
+    polygon.raster(frame_buffer);
+    frame_buffer.display_with_cv();
+    frame_buffer.reset_array();
+
+
     return;
 }
 
@@ -295,6 +376,8 @@ int main(int, char**){
             break;
         case 5:
             trabalho_curvas();
+        case 6:
+            trabalho_recortes();
         default:
             std::cout << "command not found." << std::endl;
     }
